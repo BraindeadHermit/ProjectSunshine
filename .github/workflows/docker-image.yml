@@ -19,5 +19,5 @@ jobs:
       - name: Build the Docker image
         run: docker build . -t ideal
       - name: Run the Docker image
-        run: docker run -v ./:/app/ -it ideal
+        run: docker run -it ideal /bin/bash
         
