@@ -19,5 +19,7 @@ jobs:
       - name: Build the Docker image
         run: docker build . -t ideal
       - name: Run the Docker image
+        run: chmod +x ./script/test.sh
+      - name: x
         run: docker run -v ./:/app/ -t ideal
         
