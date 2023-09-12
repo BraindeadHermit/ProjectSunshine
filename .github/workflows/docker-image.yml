@@ -19,8 +19,8 @@ jobs:
           path: ./src/apps/IDEAL/input.csv
           columns: file, type, junit
           "file": myfile.java
-          "type": ""
-          "junit": ""
+          "type": java
+          "junit": junit
 
   build:
 
