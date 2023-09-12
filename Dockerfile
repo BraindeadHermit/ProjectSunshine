@@ -50,8 +50,6 @@ RUN pip --no-cache-dir install -r  requirements.txt \
 
 COPY ./test /app/test/
 COPY pytest.ini /app/pytest.ini
-COPY ./script /app/script/
-RUN chmod +x ./script/test.sh
 WORKDIR /app/
 
 CMD ["./script/test.sh"]
