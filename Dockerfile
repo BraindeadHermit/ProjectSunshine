@@ -52,5 +52,5 @@ COPY ./test /app/test/
 COPY pytest.ini /app/pytest.ini
 WORKDIR /app/
 
-CMD ["pytest"]
+CMD ["pytest -v -m unit"]
 
