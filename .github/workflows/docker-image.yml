@@ -2,9 +2,11 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: 
+      - master
   pull_request:
-    branches: [ "master" ]
+    branches: 
+      - master
 
 jobs:
 
@@ -13,6 +15,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build -t idea
+      - uses: actions/checkout@v3
+      - name: Build the Docker image
+        run: docker build -t ideal
