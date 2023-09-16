@@ -12,26 +12,7 @@ __current_dir = os.path.dirname(os.path.abspath(__file__))
 root = os.path.dirname(os.path.realpath(__current_dir))
 
 CONFIG_VALUE_NAME = "ProjectSunshine"
-PATH = "./test/temp/"
-
-
-@pytest.fixture(scope="module", autouse=True)
-def setup():
-    """
-        This fixture is used to create a temp directory where the config file will be stored
-        and to remove it after the tests are done.
-    """
-    # create a temp directory where the config files will be stored
-    os.mkdir(f'{root}/integration/temp/')
-
-    # write the config file in the directory
-    with open(f'{root}/integration/temp/config.txt', 'w') as f:
-        f.write(f"[general]\nname = {CONFIG_VALUE_NAME}\n")
-
-    yield
-
-    # remove the temp directory
-    os.rmdir(f'{root}/integration/temp/')
+PATH = f"{root}/integration/temp/"
 
 class TestingListUtils:
 
@@ -46,6 +27,7 @@ class TestingListUtils:
         """
             this function deletes the temporary folder created for testing with its contents
         """
+        os.remove("./src/apps/IDEAL/input.csv")
         shutil.rmtree(PATH)
 
     def create_config_file(self,
@@ -67,6 +49,9 @@ class TestingListUtils:
         """
 
         self.__create_test_dir()
+
+        with open("./src/apps/IDEAL/input.csv", "w") as input:
+            input.write("file,type,junit")
 
         # creates the custom_code.txt file, inside which the custom packages and annotations used by the user in the project will be inserted
         with open(f"{PATH}custom_code.txt", "w", encoding='utf-8') as code_file:
@@ -118,6 +103,18 @@ class TestItUtils:
 
         if not os.path.exists(f"{PATH}/code/project"):
             os.mkdir(f"{PATH}/code/project")
+
+    def __setup(self):
+        """
+            This fixture is used to create a temp directory where the config file will be stored
+            and to remove it after the tests are done.
+        """
+        # create a temp directory where the config files will be stored
+        os.mkdir(PATH)
+
+        # write the config file in the directory
+        with open(f'{PATH}config.txt', 'w') as f:
+            f.write(f"[general]\nname = {CONFIG_VALUE_NAME}\n")
 
     def __delete_files(self):
         """
@@ -235,12 +232,18 @@ class TestItUtils:
             This fixture is used to mock the os.path.join function so that it returns the path of the config created for this test case. 
         """
 
+        self.__setup()
+
         def mock_join(*args):
             # Replace with the desired mocked path
-            return f"{root}/integration/temp/config.txt"
+            return f"{PATH}config.txt"
 
         # Apply the monkeypatch to os.path.join
         monkeypatch.setattr(os.path, 'join', mock_join)
+
+        yield
+
+        self.__delete_files()
 
     def test_get_config_setting(self, mock_os_path_join):
         """
@@ -621,6 +624,7 @@ class TypesListUtils:
         """
             this function deletes the temporary folder created for testing with its contents
         """
+        os.remove("./src/apps/IDEAL/input.csv")
         shutil.rmtree(PATH)
 
     def create_config_file(self,
@@ -634,6 +638,9 @@ class TypesListUtils:
         """
 
         self.__create_test_dir()
+
+        with open("./src/apps/IDEAL/input.csv", "w") as input:
+            input.write("file,type,junit")
 
         # creates the custom_code.txt file, inside which the custom packages and annotations used by the user in the project will be inserted
         with open(f"{PATH}custom_code.txt", "w") as code_file:
