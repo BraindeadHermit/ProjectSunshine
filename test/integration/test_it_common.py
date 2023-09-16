@@ -31,9 +31,7 @@ def setup():
     yield
 
     # remove the temp directory
-    os.remove(f'{root}/integration/temp/config.txt')
     os.rmdir(f'{root}/integration/temp/')
-
 
 class TestingListUtils:
 
@@ -71,7 +69,7 @@ class TestingListUtils:
         self.__create_test_dir()
 
         # creates the custom_code.txt file, inside which the custom packages and annotations used by the user in the project will be inserted
-        with open(f"{PATH}custom_code.txt", "a", encoding='utf-8') as code_file:
+        with open(f"{PATH}custom_code.txt", "w", encoding='utf-8') as code_file:
             code_file.write("[DataTypes]\n")
             code_file.write("csharp_custom_collection_data_types = []\n")
             code_file.write("\n[Test]\n")
@@ -89,15 +87,16 @@ class TestingListUtils:
                 f"csharp_custom_test_method_annotation = {csharp_test_annotations}\n")
 
         # create the project1.config file, in which the path to our file with the custom code will be inserted
-        with open(f"{PATH}project1.config", "a", encoding="utf-8") as config:
-            config.write("[Files]\n")
-            config.write("input_file=./src/apps/IDEAL/input.csv\n")
-            config.write("output_directory=./src/apps/IDEAL\n")
-            config.write("custom_code=" + PATH + "custom_code.txt\n")
-            config.write("custom_terms=custom_terms.txt\n")
+        if not os.path.exists(f'{PATH}project1.config'):
+            with open(f"{PATH}project1.config", "w", encoding="utf-8") as config:
+                config.write("[Files]\n")
+                config.write("input_file=./src/apps/IDEAL/input.csv\n")
+                config.write("output_directory=./src/apps/IDEAL\n")
+                config.write("custom_code=" + PATH + "custom_code.txt\n")
+                config.write("custom_terms=custom_terms.txt\n")
 
-            config.write("[Properties]\n")
-            config.write("junit_version=4\n")
+                config.write("[Properties]\n")
+                config.write("junit_version=4\n")
 
 
 testing_list_utils = TestingListUtils()
@@ -275,11 +274,8 @@ class TestItTestingList:
 
         testing_list_utils.create_config_file()
 
-        if os.path.exists(f"{PATH}project1.config"):
-            yield Project(f"{PATH}project1.config")
-        else:
-            yield
-
+        yield Project(f"{PATH}project1.config")
+  
         testing_list_utils.delete_files()
 
     def test_get_test_method_annotations_java(self, mock_project):
@@ -303,10 +299,7 @@ class TestItTestingList:
         testing_list_utils.create_config_file(
             java_test_annotations="[\"UnitTest\", \"IntegrationTest\", \"SystemTest\"]")
 
-        if os.path.exists(f"{PATH}project1.config"):
-            yield Project(f"{PATH}project1.config")
-        else:
-            yield
+        yield Project(f"{PATH}project1.config")
 
         testing_list_utils.delete_files()
 
@@ -345,10 +338,7 @@ class TestItTestingList:
         testing_list_utils.create_config_file(
             csharp_test_annotations="[\"UnitTest\", \"IntegrationTest\", \"SystemTest\"]")
 
-        if os.path.exists(f"{PATH}project1.config"):
-            yield Project(f"{PATH}project1.config")
-        else:
-            yield
+        yield Project(f"{PATH}project1.config")
 
         testing_list_utils.delete_files()
 
@@ -415,10 +405,7 @@ class TestItTestingList:
         testing_list_utils.create_config_file(
             java_testing_packages="[\"Serenity\", \"TestNG\", \"JBehave\"]")
 
-        if os.path.exists(f"{PATH}project1.config"):
-            yield Project(f"{PATH}project1.config")
-        else:
-            yield
+        yield Project(f"{PATH}project1.config")
 
         testing_list_utils.delete_files()
 
@@ -480,10 +467,7 @@ class TestItTestingList:
         testing_list_utils.create_config_file(
             csharp_testing_packages="[\"MSTest\", \"MbUnit\"]")
 
-        if os.path.exists(f"{PATH}project1.config"):
-            yield Project(f"{PATH}project1.config")
-        else:
-            yield
+        yield Project(f"{PATH}project1.config")
 
         testing_list_utils.delete_files()
 
@@ -544,10 +528,7 @@ class TestItTestingList:
         testing_list_utils.create_config_file(
             java_null_check_methods="[\"assertEmpty\", \"isNull\"]")
 
-        if os.path.exists(f"{PATH}project1.config"):
-            yield Project(f"{PATH}project1.config")
-        else:
-            yield
+        yield Project(f"{PATH}project1.config")
 
         testing_list_utils.delete_files()
 
@@ -593,10 +574,7 @@ class TestItTestingList:
         testing_list_utils.create_config_file(
             csharp_null_check_methods="[\"isEmpty\", \"assertNull\"]")
 
-        if os.path.exists(f"{PATH}project1.config"):
-            yield Project(f"{PATH}project1.config")
-        else:
-            yield
+        yield Project(f"{PATH}project1.config")
 
         testing_list_utils.delete_files()
 
@@ -658,7 +636,7 @@ class TypesListUtils:
         self.__create_test_dir()
 
         # creates the custom_code.txt file, inside which the custom packages and annotations used by the user in the project will be inserted
-        with open(f"{PATH}custom_code.txt", "a", encoding='utf-8') as code_file:
+        with open(f"{PATH}custom_code.txt", "w") as code_file:
             code_file.write("[DataTypes]\n")
             code_file.write(
                 f"csharp_custom_collection_data_types = {csharp_custom_collection_data_types}\n")
@@ -673,15 +651,16 @@ class TypesListUtils:
             code_file.write("csharp_custom_test_method_annotation = []\n")
 
         # create the project1.config file, in which the path to our file with the custom code will be inserted
-        with open(f"{PATH}project1.config", "a", encoding="utf-8") as config:
-            config.write("[Files]\n")
-            config.write("input_file=./src/apps/IDEAL/input.csv\n")
-            config.write("output_directory=./src/apps/IDEAL\n")
-            config.write("custom_code=" + PATH + "custom_code.txt\n")
-            config.write("custom_terms=custom_terms.txt\n")
+        if not os.path.exists(f"{PATH}project1.config"):
+            with open(f"{PATH}project1.config", "w") as config:
+                config.write("[Files]\n")
+                config.write("input_file=./src/apps/IDEAL/input.csv\n")
+                config.write("output_directory=./src/apps/IDEAL\n")
+                config.write("custom_code=" + PATH + "custom_code.txt\n")
+                config.write("custom_terms=custom_terms.txt\n")
 
-            config.write("[Properties]\n")
-            config.write("junit_version=4\n")
+                config.write("[Properties]\n")
+                config.write("junit_version=4\n")
 
 
 types_list_utils = TypesListUtils()
@@ -697,10 +676,7 @@ class TestItTypesList:
 
         types_list_utils.create_config_file()
 
-        if os.path.exists(f"{PATH}project1.config"):
-            yield Project(f"{PATH}project1.config")
-        else:
-            yield
+        yield Project(f"{PATH}project1.config")
 
         types_list_utils.delete_files()
 
@@ -768,10 +744,7 @@ class TestItTypesList:
         types_list_utils.create_config_file(
             java_custom_collection_data_types="[\"BigCollection\", \"Matrix\"]")
 
-        if os.path.exists(f"{PATH}project1.config"):
-            yield Project(f"{PATH}project1.config")
-        else:
-            yield
+        yield Project(f"{PATH}project1.config")
 
         types_list_utils.delete_files()
 
@@ -888,10 +861,7 @@ class TestItTypesList:
         types_list_utils.create_config_file(
             csharp_custom_collection_data_types="[\"PriorityQueue\", \"Matrix\"]")
 
-        if os.path.exists(f"{PATH}project1.config"):
-            yield Project(f"{PATH}project1.config")
-        else:
-            yield
+        yield Project(f"{PATH}project1.config")
 
         types_list_utils.delete_files()
 
