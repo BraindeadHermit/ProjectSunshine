@@ -18,5 +18,9 @@ jobs:
       - name: Build the Docker image
         run: docker build . -t ideal
       - name: Run the Docker image
-        run: docker run -t ideal
-        
+        run: docker run -v ./:/app/ -t ideal
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v3
+        with:
+          name: code-coverage-report
+          path: coverage.xml
