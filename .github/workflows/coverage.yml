@@ -25,7 +25,6 @@ jobs:
     env:
       OS: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
       - name: Download a single artifact
         uses: actions/download-artifact@v3
         with:
