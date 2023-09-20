@@ -1,0 +1,38 @@
+name: Coverage
+
+on:
+  push:
+    branches:
+      - master
+      - 'test/**'
+      - 'feat/**'
+      - 'fix/**'
+      - 'perf/**'
+      - 'refactor/**'
+  pull_request:
+    branches:
+      - master
+      - 'test/**'
+      - 'feat/**'
+      - 'fix/**'
+      - 'perf/**'
+      - 'refactor/**'
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    
+    env:
+      OS: ubuntu-latest
+    steps:
+      - name: Download a single artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: code-coverage-report
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+          name: codecov-umbrella
+          verbose: true
