@@ -2,10 +2,10 @@ name: Docker Image CI
 
 on:
   push:
-    branches: 
+    branches:
       - master
   pull_request:
-    branches: 
+    branches:
       - master
 
 jobs:
@@ -22,7 +22,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: code-coverage-report
-          path: ./coverage.xml
+          path: ./coverage.json
 
   cov:
     runs-on: ubuntu-latest
