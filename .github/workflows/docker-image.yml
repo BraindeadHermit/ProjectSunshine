@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build the Docker image
-        run: docker build . -t ideal
+        run: docker build . -t ideal --name ideal
       - name: Copy the test dir
         run: docker cp test ideal:/app/test
       - name: Run the Docker image
