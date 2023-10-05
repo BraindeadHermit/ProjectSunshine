@@ -20,6 +20,8 @@ jobs:
         run: docker run --name ideal -t -w /app ideal echo
       - name: Copy the test dir
         run: docker cp test ideal:/app/test
+      - name: Execute tests
+        run: docker exec -t ideal pytest
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         with:
