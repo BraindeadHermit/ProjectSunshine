@@ -48,7 +48,6 @@ RUN pip --no-cache-dir install -r  requirements.txt \
     && python3 download_nltk.py \ 
     && rm download_nltk.py
 
-COPY ./test /app/test/
 COPY pytest.ini /app/pytest.ini
 WORKDIR /app/src/apps/IDEAL/
 
