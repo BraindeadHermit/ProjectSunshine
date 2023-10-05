@@ -17,7 +17,7 @@ jobs:
       - name: Build the Docker image
         run: docker build . -t ideal
       - name: Run the Docker image
-        run: docker run --name ideal -t -w /app ideal /bin/bash
+        run: docker run --name ideal -it -w /app ideal echo
       - name: Copy the test dir
         run: docker cp test ideal:/app/test
       - name: Execute tests
