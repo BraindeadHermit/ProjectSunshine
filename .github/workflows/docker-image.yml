@@ -17,7 +17,7 @@ jobs:
       - name: Build the Docker image
         run: docker build . -t ideal
       - name: Copy the test dir
-        run: docker cp test /app/test
+        run: docker cp test ideal:/app/test
       - name: Run the Docker image
         run: docker run -t -w /app ideal pytest
       - name: Archive code coverage results
