@@ -17,11 +17,10 @@ jobs:
       - name: Build the Docker image
         run: docker build . -t ideal
       - name: Run the Docker image
-        run: docker run --name ideal -t -w /app ideal echo
-      - name: Copy the test dir
-        run: docker cp test ideal:/app/test
-      - name: Execute tests
-        run: docker run -t -w /app ideal pytest
+        run: |
+          docker run --name ideal -t -w /app ideal /bin/bash
+          cp test ideal:/app/test
+          pytest
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         with:
