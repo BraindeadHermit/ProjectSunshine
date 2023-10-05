@@ -17,7 +17,7 @@ jobs:
       - name: Build the Docker image
         run: docker build . -t ideal
       - name: Run the Docker image
-        run: docker run -t ideal pytest
+        run: docker run -t -w ./app ideal pytest
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         with:
