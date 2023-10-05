@@ -15,11 +15,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build the Docker image
-        run: docker build . -t ideal:ideal
+        run: docker build . -t ideal
+      - name: Run the Docker image
+        run: docker run -t -w /app ideal --name ideal ""
       - name: Copy the test dir
         run: docker cp test ideal:/app/test
-      - name: Run the Docker image
-        run: docker run -t -w /app ideal pytest
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         with:
